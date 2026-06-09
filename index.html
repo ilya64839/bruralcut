@@ -7,162 +7,229 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500&family=Playfair+Display:ital@1&display=swap" rel="stylesheet">
-<link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-:root{--black:#0a0a0a;--white:#f0ede8;--gold:#c8a96e;--gray:#1a1a1a;--gray2:#2a2a2a;--muted:#888}
+:root{
+  --black:#0a0a0a;
+  --white:#f0ede8;
+  --gold:#c8a96e;
+  --gold2:#a8894e;
+  --gray:#161616;
+  --gray2:#222;
+  --gray3:#2e2e2e;
+  --muted:#777;
+  --muted2:#555;
+}
 html{scroll-behavior:smooth}
-body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden}
-.cursor{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%);transition:transform 0.1s}
-.cursor-ring{position:fixed;width:40px;height:40px;border:1px solid var(--gold);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:all 0.15s;opacity:0.5}
-nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:24px 60px;display:flex;align-items:center;justify-content:space-between;transition:background 0.3s}
-.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.15em}
+body{background:var(--black);color:var(--white);font-family:'Inter',sans-serif;font-weight:300;overflow-x:hidden;cursor:none}
+
+/* CURSOR */
+.cur{position:fixed;width:8px;height:8px;background:var(--gold);border-radius:50%;pointer-events:none;z-index:9999;transform:translate(-50%,-50%)}
+.cur-ring{position:fixed;width:36px;height:36px;border:1px solid rgba(200,169,110,0.5);border-radius:50%;pointer-events:none;z-index:9998;transform:translate(-50%,-50%);transition:width 0.3s,height 0.3s,opacity 0.3s}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;padding:22px 56px;display:flex;align-items:center;justify-content:space-between;transition:all 0.4s;background:linear-gradient(to bottom,rgba(10,10,10,0.8),transparent)}
+nav.solid{background:rgba(10,10,10,0.96);backdrop-filter:blur(12px);padding:16px 56px;border-bottom:1px solid rgba(200,169,110,0.1)}
+.nav-logo{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:0.15em;color:var(--white)}
 .nav-logo span{color:var(--gold)}
-.nav-links{display:flex;gap:40px;list-style:none}
-.nav-links a{text-decoration:none;color:var(--muted);font-size:12px;letter-spacing:0.12em;text-transform:uppercase;transition:color 0.3s}
+.nav-links{display:flex;gap:36px;list-style:none}
+.nav-links a{text-decoration:none;color:var(--muted);font-size:11px;letter-spacing:0.14em;text-transform:uppercase;font-weight:400;transition:color 0.3s}
 .nav-links a:hover{color:var(--white)}
-.nav-book{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:10px 28px;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;transition:all 0.3s}
+.nav-book{background:transparent;border:1px solid var(--gold);color:var(--gold);padding:10px 26px;font-family:'Inter',sans-serif;font-size:11px;letter-spacing:0.14em;text-transform:uppercase;cursor:none;transition:all 0.3s}
 .nav-book:hover{background:var(--gold);color:var(--black)}
+.nav-mobile-btn{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:none;padding:4px}
+.nav-mobile-btn span{display:block;width:22px;height:1.5px;background:var(--white)}
+
+/* HERO */
 .hero{position:relative;height:100vh;display:flex;align-items:flex-end;overflow:hidden}
-.hero-bg{position:absolute;inset:0;background:url('https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=1600&q=80') center 30%/cover;filter:brightness(0.4);transform:scale(1.05);transition:transform 8s ease}
-.hero-bg.loaded{transform:scale(1)}
-.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,1) 0%,rgba(10,10,10,0.3) 50%,transparent 100%)}
-.hero-content{position:relative;z-index:1;padding:0 60px 80px;width:100%}
-.hero-eyebrow{font-size:11px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold);margin-bottom:24px;display:flex;align-items:center;gap:16px}
-.hero-eyebrow::before{content:'';width:40px;height:1px;background:var(--gold)}
-.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(80px,13vw,180px);line-height:0.88;letter-spacing:0.02em;margin-bottom:40px}
-.hero-title .outline{color:transparent;-webkit-text-stroke:1px var(--white);display:block}
+.hero-bg{position:absolute;inset:0}
+.hero-bg img{width:100%;height:100%;object-fit:cover;object-position:center 30%;filter:brightness(0.38);transform:scale(1.06);transition:transform 9s ease}
+.hero-bg img.loaded{transform:scale(1)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,1) 0%,rgba(10,10,10,0.4) 45%,rgba(10,10,10,0.1) 100%)}
+.hero-content{position:relative;z-index:2;padding:0 56px 72px;width:100%}
+.hero-label{font-size:10px;letter-spacing:0.28em;text-transform:uppercase;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:14px;opacity:0;transform:translateY(16px);transition:all 0.8s 0.2s}
+.hero-label::before{content:'';width:28px;height:1px;background:var(--gold)}
+.hero-label.show{opacity:1;transform:translateY(0)}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(52px,7.5vw,108px);line-height:0.92;letter-spacing:0.02em;margin-bottom:36px}
+.hero-title .word{display:inline-block;opacity:0;transform:translateY(36px);transition:all 0.8s cubic-bezier(0.2,0,0,1)}
+.hero-title .word.show{opacity:1;transform:translateY(0)}
+.hero-title .outline{color:transparent;-webkit-text-stroke:1px rgba(240,237,232,0.6)}
 .hero-title .gold{color:var(--gold)}
-.hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:40px}
-.hero-desc{max-width:400px;font-size:16px;color:rgba(240,237,232,0.6);line-height:1.75}
-.hero-cta{display:flex;flex-direction:column;align-items:flex-end;gap:16px;flex-shrink:0}
-.btn-gold{background:var(--gold);color:var(--black);border:none;padding:18px 48px;font-family:'Inter',sans-serif;font-size:13px;letter-spacing:0.12em;text-transform:uppercase;cursor:pointer;font-weight:500;transition:all 0.3s}
-.btn-gold:hover{background:#d4b87a}
-.scroll-hint{display:flex;align-items:center;gap:12px;font-size:11px;letter-spacing:0.15em;color:var(--muted);text-transform:uppercase}
-.scroll-hint::after{content:'';width:60px;height:1px;background:var(--muted)}
-.marquee-wrap{background:var(--gold);padding:14px 0;overflow:hidden}
-.marquee{display:flex;white-space:nowrap;animation:ticker 25s linear infinite}
-.mi{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:0.2em;color:var(--black);padding:0 32px}
-.ms{color:rgba(0,0,0,0.3)}
+.hero-bottom{display:flex;align-items:flex-end;justify-content:space-between;gap:32px}
+.hero-desc{max-width:420px;font-size:15px;color:rgba(240,237,232,0.55);line-height:1.8;opacity:0;transform:translateY(16px);transition:all 0.8s 0.9s}
+.hero-desc.show{opacity:1;transform:translateY(0)}
+.hero-cta{display:flex;flex-direction:column;align-items:flex-end;gap:14px;flex-shrink:0;opacity:0;transform:translateY(16px);transition:all 0.8s 1.1s}
+.hero-cta.show{opacity:1;transform:translateY(0)}
+.btn-gold{background:var(--gold);color:var(--black);border:none;padding:16px 44px;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:0.12em;text-transform:uppercase;cursor:none;font-weight:500;transition:all 0.3s}
+.btn-gold:hover{background:#d4b87a;transform:translateY(-1px)}
+.hero-scroll{display:flex;align-items:center;gap:10px;font-size:10px;letter-spacing:0.16em;color:var(--muted);text-transform:uppercase}
+.hero-scroll::after{content:'';width:48px;height:1px;background:var(--muted2)}
+.hero-stats{display:flex;gap:40px;margin-top:32px;padding-top:28px;border-top:1px solid rgba(240,237,232,0.08);opacity:0;transition:all 0.8s 1.3s}
+.hero-stats.show{opacity:1}
+.hstat-n{font-family:'Bebas Neue',sans-serif;font-size:36px;line-height:1;color:var(--white)}
+.hstat-n .u{color:var(--gold);font-size:20px}
+.hstat-l{font-size:10px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:3px}
+
+/* MARQUEE */
+.marquee-wrap{background:var(--gold);padding:13px 0;overflow:hidden}
+.marquee{display:flex;white-space:nowrap;animation:ticker 28s linear infinite}
+.mi{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:0.2em;color:var(--black);padding:0 28px}
+.ms{color:rgba(0,0,0,0.25);font-size:12px}
 @keyframes ticker{from{transform:translateX(0)}to{transform:translateX(-50%)}}
-.about{padding:140px 60px;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center;max-width:1400px;margin:0 auto}
-.tag{font-size:11px;letter-spacing:0.25em;color:var(--gold);text-transform:uppercase;margin-bottom:20px}
-.h2b{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,5.5vw,84px);line-height:0.95;margin-bottom:32px}
-.h2b em{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold);font-size:0.85em}
-.body-text{font-size:16px;color:rgba(240,237,232,0.6);line-height:1.8;margin-bottom:48px}
-.stats{display:grid;grid-template-columns:repeat(3,1fr);gap:24px}
-.sn{font-family:'Bebas Neue',sans-serif;font-size:52px;line-height:1}
-.su{color:var(--gold)}
-.sl{font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px}
-.aimg-wrap{position:relative}
-.aimg{width:100%;aspect-ratio:3/4;object-fit:cover;display:block;filter:grayscale(20%)}
-.aimg-label{position:absolute;bottom:-16px;right:-16px;background:var(--gold);color:var(--black);padding:18px 24px;font-family:'Bebas Neue',sans-serif;font-size:13px;letter-spacing:0.2em;line-height:1.4}
-.svcs-wrap{padding:0 60px 140px;max-width:1400px;margin:0 auto}
-.sec-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:56px;border-bottom:1px solid var(--gray2);padding-bottom:28px}
-.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(36px,5vw,72px);line-height:1}
-.sec-sub{font-size:12px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;max-width:240px;text-align:right}
+
+/* ABOUT */
+.about{padding:120px 56px;display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:center;max-width:1360px;margin:0 auto}
+.sec-tag{font-size:10px;letter-spacing:0.26em;text-transform:uppercase;color:var(--gold);margin-bottom:18px}
+.sec-h{font-family:'Bebas Neue',sans-serif;font-size:clamp(44px,5vw,76px);line-height:0.95;margin-bottom:28px}
+.sec-h em{font-family:'Playfair Display',serif;font-style:italic;color:var(--gold);font-size:0.82em}
+.body-t{font-size:15px;color:rgba(240,237,232,0.55);line-height:1.85;margin-bottom:40px}
+.about-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.ast-n{font-family:'Bebas Neue',sans-serif;font-size:46px;line-height:1}
+.ast-u{color:var(--gold);font-size:22px}
+.ast-l{font-size:10px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;margin-top:4px}
+.about-img-wrap{position:relative}
+.about-img{width:100%;aspect-ratio:2/3;object-fit:cover;display:block;filter:grayscale(15%)}
+.about-badge{position:absolute;bottom:-14px;right:-14px;background:var(--gold);color:var(--black);padding:16px 22px;font-family:'Bebas Neue',sans-serif;font-size:12px;letter-spacing:0.18em;line-height:1.5}
+
+/* SERVICES */
+.svcs{padding:0 56px 120px;max-width:1360px;margin:0 auto}
+.sec-hd{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:48px;border-bottom:1px solid var(--gray3);padding-bottom:24px}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(34px,4.5vw,64px);line-height:1}
+.sec-note{font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase;max-width:220px;text-align:right;line-height:1.6}
 .svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px}
-.svc{background:var(--gray);padding:44px 36px;position:relative;overflow:hidden;transition:background 0.4s}
-.svc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform 0.4s;transform-origin:left}
+.svc{background:var(--gray);padding:40px 32px;position:relative;overflow:hidden;transition:background 0.35s}
+.svc::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform 0.35s;transform-origin:left}
 .svc:hover{background:var(--gray2)}
 .svc:hover::after{transform:scaleX(1)}
-.svc-n{font-family:'Bebas Neue',sans-serif;font-size:72px;color:rgba(200,169,110,0.1);line-height:1;position:absolute;top:16px;right:24px;transition:color 0.4s}
-.svc:hover .svc-n{color:rgba(200,169,110,0.2)}
-.svc-name{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:0.04em;margin-bottom:12px}
-.svc-desc{font-size:14px;color:rgba(240,237,232,0.5);line-height:1.7;margin-bottom:28px}
-.svc-price{font-family:'Bebas Neue',sans-serif;font-size:34px;color:var(--gold)}
-.svc-price span{font-family:'Inter',sans-serif;font-size:12px;color:var(--muted);font-weight:300}
-.masters-wrap{background:var(--gray);padding:140px 60px}
-.masters-inner{max-width:1400px;margin:0 auto}
-.masters-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px}
-.mc{position:relative;overflow:hidden;aspect-ratio:3/4;cursor:pointer}
-.mc img{width:100%;height:100%;object-fit:cover;filter:grayscale(60%);transition:all 0.5s}
-.mc:hover img{filter:grayscale(0%);transform:scale(1.06)}
-.mc-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,0.95) 0%,rgba(10,10,10,0.2) 60%,transparent 100%)}
-.mc-info{position:absolute;bottom:0;left:0;right:0;padding:28px}
-.mc-name{font-family:'Bebas Neue',sans-serif;font-size:30px;letter-spacing:0.04em;margin-bottom:4px}
-.mc-spec{font-size:11px;color:var(--gold);letter-spacing:0.15em;text-transform:uppercase;margin-bottom:12px}
-.mc-exp{font-size:13px;color:rgba(240,237,232,0.5)}
-.mc-btn{display:inline-block;margin-top:14px;padding:9px 22px;border:1px solid var(--gold);color:var(--gold);font-size:11px;letter-spacing:0.15em;text-transform:uppercase;opacity:0;transform:translateY(8px);transition:all 0.3s;text-decoration:none;cursor:pointer}
+.svc-n{font-family:'Bebas Neue',sans-serif;font-size:64px;color:rgba(200,169,110,0.08);line-height:1;position:absolute;top:14px;right:20px;transition:color 0.35s}
+.svc:hover .svc-n{color:rgba(200,169,110,0.16)}
+.svc-name{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:0.03em;margin-bottom:10px}
+.svc-desc{font-size:13px;color:rgba(240,237,232,0.45);line-height:1.7;margin-bottom:24px}
+.svc-price{font-family:'Bebas Neue',sans-serif;font-size:30px;color:var(--gold)}
+.svc-price span{font-family:'Inter',sans-serif;font-size:11px;color:var(--muted);font-weight:300}
+
+/* MASTERS */
+.masters-wrap{background:var(--gray);padding:120px 56px}
+.masters-inner{max-width:1360px;margin:0 auto}
+.masters-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3px;margin-top:48px}
+.mc{position:relative;overflow:hidden;aspect-ratio:3/4}
+.mc img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:grayscale(50%) brightness(0.9);transition:all 0.6s}
+.mc:hover img{filter:grayscale(0%) brightness(1);transform:scale(1.04)}
+.mc-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(10,10,10,0.92) 0%,rgba(10,10,10,0.15) 55%,transparent 100%)}
+.mc-info{position:absolute;bottom:0;left:0;right:0;padding:24px 28px}
+.mc-name{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;margin-bottom:4px}
+.mc-spec{font-size:11px;color:var(--gold);letter-spacing:0.14em;text-transform:uppercase;margin-bottom:10px}
+.mc-exp{font-size:12px;color:rgba(240,237,232,0.45)}
+.mc-btn{display:inline-block;margin-top:14px;padding:9px 20px;border:1px solid rgba(200,169,110,0.5);color:var(--gold);font-size:10px;letter-spacing:0.14em;text-transform:uppercase;opacity:0;transform:translateY(8px);transition:all 0.35s;cursor:none;font-family:'Inter',sans-serif}
 .mc:hover .mc-btn{opacity:1;transform:translateY(0)}
-.gallery-wrap{padding:140px 60px;max-width:1400px;margin:0 auto}
-.gal-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:4px;margin-top:56px}
+.mc-btn:hover{background:var(--gold);color:var(--black);border-color:var(--gold)}
+
+/* GALLERY */
+.gallery-wrap{padding:120px 56px;max-width:1360px;margin:0 auto}
+.gal-grid{display:grid;grid-template-columns:repeat(12,1fr);grid-auto-rows:180px;gap:3px;margin-top:48px}
 .gi{overflow:hidden}
-.gi img{width:100%;height:100%;object-fit:cover;filter:grayscale(30%);transition:all 0.4s;display:block}
-.gi:hover img{filter:grayscale(0%);transform:scale(1.04)}
-.g1{grid-column:span 5;aspect-ratio:4/5}
-.g2{grid-column:span 4;aspect-ratio:4/5}
-.g3{grid-column:span 3;aspect-ratio:4/5}
-.g4{grid-column:span 4;aspect-ratio:16/9}
-.g5{grid-column:span 4;aspect-ratio:16/9}
-.g6{grid-column:span 4;aspect-ratio:16/9}
-.booking-wrap{background:var(--gold);padding:120px 60px}
-.booking-inner{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:1fr 1fr;gap:100px;align-items:center}
-.bl .tag{color:rgba(0,0,0,0.5);margin-bottom:16px}
-.bl h2{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,6vw,96px);color:var(--black);line-height:0.9;margin-bottom:24px}
-.bl p{font-size:16px;color:rgba(0,0,0,0.6);line-height:1.75}
-.bform{display:flex;flex-direction:column;gap:14px}
-.frow{display:grid;grid-template-columns:1fr 1fr;gap:14px}
-.field label{display:block;font-size:11px;letter-spacing:0.15em;text-transform:uppercase;color:rgba(0,0,0,0.5);margin-bottom:6px}
-.field input,.field select{width:100%;background:rgba(0,0,0,0.08);border:none;border-bottom:1px solid rgba(0,0,0,0.2);padding:13px 0;font-family:'Inter',sans-serif;font-size:15px;color:var(--black);outline:none;transition:border-color 0.3s;-webkit-appearance:none;appearance:none}
-.field input::placeholder{color:rgba(0,0,0,0.35)}
-.field input:focus,.field select:focus{border-bottom-color:var(--black)}
-.field select option{background:var(--black);color:var(--white)}
-.bsubmit{background:var(--black);color:var(--gold);border:none;padding:18px;font-family:'Inter',sans-serif;font-size:13px;letter-spacing:0.15em;text-transform:uppercase;cursor:pointer;margin-top:6px;transition:all 0.3s;font-weight:500;width:100%}
-.bsubmit:hover{background:#111}
-.reviews-wrap{padding:140px 60px;max-width:1400px;margin:0 auto}
-.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:56px}
-.rev{background:var(--gray);padding:44px 36px}
-.rev-q{font-family:'Playfair Display',serif;font-size:72px;color:var(--gold);opacity:0.3;line-height:0.8;margin-bottom:16px}
-.rev-stars{color:var(--gold);font-size:12px;letter-spacing:2px;margin-bottom:16px}
-.rev-text{font-size:15px;color:rgba(240,237,232,0.65);line-height:1.8;margin-bottom:28px;font-style:italic}
-.rev-author{display:flex;align-items:center;gap:14px}
-.rev-avatar{width:42px;height:42px;border-radius:50%;object-fit:cover;filter:grayscale(40%)}
-.rev-name{font-size:14px;font-weight:500}
-.rev-meta{font-size:12px;color:var(--muted);margin-top:2px}
-footer{background:var(--gray);border-top:1px solid var(--gray2);padding:80px 60px 36px}
-.ft{max-width:1400px;margin:0 auto}
-.ftop{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:60px;margin-bottom:56px}
-.flogo{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:0.15em;margin-bottom:16px}
+.gi img{width:100%;height:100%;object-fit:cover;filter:grayscale(25%);transition:all 0.45s;display:block}
+.gi:hover img{filter:grayscale(0%);transform:scale(1.05)}
+.g1{grid-column:span 5;grid-row:span 2}
+.g2{grid-column:span 4;grid-row:span 1}
+.g3{grid-column:span 3;grid-row:span 2}
+.g4{grid-column:span 4;grid-row:span 1}
+.g5{grid-column:span 4;grid-row:span 1}
+.g6{grid-column:span 4;grid-row:span 1}
+
+/* BOOKING */
+.booking-wrap{background:var(--gray);padding:120px 56px}
+.booking-inner{max-width:1100px;margin:0 auto;display:grid;grid-template-columns:1fr 1.2fr;gap:80px;align-items:start}
+.booking-left .sec-tag{margin-bottom:16px}
+.booking-left .sec-h{margin-bottom:20px}
+.booking-left .body-t{margin-bottom:36px}
+.booking-details{display:flex;flex-direction:column;gap:18px}
+.bd-item{display:flex;gap:16px;align-items:flex-start}
+.bd-icon{width:40px;height:40px;border-radius:8px;background:var(--gray3);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:16px}
+.bd-text p:first-child{font-size:13px;font-weight:500;color:var(--white);margin-bottom:2px}
+.bd-text p:last-child{font-size:12px;color:var(--muted)}
+.booking-form{background:var(--black);padding:40px;border:1px solid var(--gray3)}
+.bf-title{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.04em;margin-bottom:6px}
+.bf-sub{font-size:12px;color:var(--muted);margin-bottom:32px;line-height:1.6}
+.bf-row{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.bf-group{margin-bottom:16px}
+.bf-label{display:block;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;font-weight:400}
+.bf-input,.bf-select{width:100%;background:var(--gray);border:1px solid var(--gray3);color:var(--white);padding:13px 16px;font-family:'Inter',sans-serif;font-size:14px;font-weight:300;outline:none;transition:border-color 0.3s;-webkit-appearance:none;border-radius:0}
+.bf-input:focus,.bf-select:focus{border-color:var(--gold)}
+.bf-input::placeholder{color:var(--muted2)}
+.bf-select option{background:var(--gray2)}
+.bf-submit{width:100%;background:var(--gold);color:var(--black);border:none;padding:17px;font-family:'Inter',sans-serif;font-size:12px;letter-spacing:0.14em;text-transform:uppercase;cursor:none;font-weight:500;transition:all 0.3s;margin-top:6px}
+.bf-submit:hover{background:#d4b87a;transform:translateY(-1px)}
+.bf-note{text-align:center;margin-top:12px;font-size:11px;color:var(--muted);line-height:1.6}
+
+/* REVIEWS */
+.reviews-wrap{padding:120px 56px;max-width:1360px;margin:0 auto}
+.rev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:48px}
+.rev{background:var(--gray);padding:40px 34px}
+.rev-q{font-family:'Playfair Display',serif;font-size:64px;color:var(--gold);opacity:0.25;line-height:0.8;margin-bottom:14px}
+.rev-stars{color:var(--gold);font-size:11px;letter-spacing:3px;margin-bottom:14px}
+.rev-text{font-size:14px;color:rgba(240,237,232,0.6);line-height:1.8;margin-bottom:24px;font-style:italic}
+.rev-author{display:flex;align-items:center;gap:12px}
+.rev-avatar{width:40px;height:40px;border-radius:50%;object-fit:cover;filter:grayscale(40%)}
+.rev-name{font-size:13px;font-weight:500}
+.rev-meta{font-size:11px;color:var(--muted);margin-top:2px}
+
+/* FOOTER */
+footer{background:var(--gray);border-top:1px solid rgba(200,169,110,0.1);padding:72px 56px 36px}
+.ft{max-width:1360px;margin:0 auto}
+.ftop{display:grid;grid-template-columns:2fr 1fr 1fr 1fr;gap:52px;margin-bottom:48px}
+.flogo{font-family:'Bebas Neue',sans-serif;font-size:28px;letter-spacing:0.14em;margin-bottom:14px}
 .flogo span{color:var(--gold)}
-.fdesc{font-size:14px;color:var(--muted);line-height:1.7;max-width:260px}
-.fcol-title{font-size:11px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.fdesc{font-size:13px;color:var(--muted);line-height:1.75;max-width:240px}
+.fct{font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
 .fcol ul{list-style:none;display:flex;flex-direction:column;gap:9px}
-.fcol ul a{text-decoration:none;font-size:14px;color:var(--muted);transition:color 0.3s}
+.fcol ul a{text-decoration:none;font-size:13px;color:var(--muted);transition:color 0.3s}
 .fcol ul a:hover{color:var(--white)}
-.fbot{border-top:1px solid var(--gray2);padding-top:28px;display:flex;justify-content:space-between;align-items:center}
-.fcopy{font-size:12px;color:var(--muted)}
-.fsoc{display:flex;gap:20px}
-.fsoc a{font-size:12px;color:var(--muted);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.3s}
+.fbot{border-top:1px solid var(--gray3);padding-top:24px;display:flex;justify-content:space-between;align-items:center}
+.fcopy{font-size:11px;color:var(--muted2)}
+.fsoc{display:flex;gap:18px}
+.fsoc a{font-size:11px;color:var(--muted2);text-decoration:none;letter-spacing:0.1em;text-transform:uppercase;transition:color 0.3s}
 .fsoc a:hover{color:var(--gold)}
+
+/* REVEAL */
+.rv{opacity:0;transform:translateY(24px);transition:opacity 0.75s cubic-bezier(0.4,0,0.2,1),transform 0.75s cubic-bezier(0.4,0,0.2,1)}
+.rv.in{opacity:1;transform:none}
+.rvl{opacity:0;transform:translateX(-28px);transition:opacity 0.75s cubic-bezier(0.4,0,0.2,1),transform 0.75s cubic-bezier(0.4,0,0.2,1)}
+.rvl.in{opacity:1;transform:none}
+.rvr{opacity:0;transform:translateX(28px);transition:opacity 0.75s cubic-bezier(0.4,0,0.2,1),transform 0.75s cubic-bezier(0.4,0,0.2,1)}
+.rvr.in{opacity:1;transform:none}
+
 @media(max-width:1024px){
-  .about{grid-template-columns:1fr;gap:60px;padding:80px 40px}
-  .aimg-wrap{order:-1}
+  .about{grid-template-columns:1fr;gap:56px;padding:80px 40px}
+  .about-img-wrap{order:-1}
   .svc-grid,.masters-grid,.rev-grid{grid-template-columns:1fr 1fr}
-  .booking-inner{grid-template-columns:1fr;gap:60px}
-  .ftop{grid-template-columns:1fr 1fr;gap:40px}
+  .booking-inner{grid-template-columns:1fr;gap:48px}
+  .ftop{grid-template-columns:1fr 1fr;gap:36px}
 }
 @media(max-width:720px){
-  nav{padding:18px 20px}
+  nav{padding:16px 20px}
   .nav-links{display:none}
+  .nav-mobile-btn{display:flex}
   .hero-content{padding:0 20px 52px}
-  .hero-bottom{flex-direction:column;align-items:flex-start}
+  .hero-bottom{flex-direction:column;align-items:flex-start;gap:24px}
   .hero-cta{align-items:flex-start}
-  .about,.svcs-wrap,.gallery-wrap,.reviews-wrap{padding:80px 20px}
-  .masters-wrap,.booking-wrap{padding:80px 20px}
-  footer{padding:60px 20px 32px}
-  .frow{grid-template-columns:1fr}
+  .hero-stats{gap:24px}
+  .about,.svcs,.gallery-wrap,.reviews-wrap{padding:72px 20px}
+  .masters-wrap,.booking-wrap{padding:72px 20px}
+  footer{padding:56px 20px 28px}
   .svc-grid,.masters-grid,.rev-grid{grid-template-columns:1fr}
-  .gal-grid{grid-template-columns:1fr 1fr}
-  .g1,.g2,.g3,.g4,.g5,.g6{grid-column:span 1;aspect-ratio:1/1}
+  .gal-grid{grid-template-columns:1fr 1fr;grid-auto-rows:140px}
+  .g1,.g2,.g3,.g4,.g5,.g6{grid-column:span 1;grid-row:span 1}
+  .bf-row{grid-template-columns:1fr}
   .ftop{grid-template-columns:1fr}
-  .stats{grid-template-columns:repeat(3,1fr)}
+  .hero-title{font-size:clamp(48px,10vw,80px)}
 }
 </style>
 </head>
 <body>
-<div class="cursor" id="cur"></div>
-<div class="cursor-ring" id="ring"></div>
+
+<div class="cur" id="cur"></div>
+<div class="cur-ring" id="ring"></div>
 
 <nav id="nav">
   <div class="nav-logo">BRUTAL<span>CUT</span></div>
@@ -170,163 +237,273 @@ footer{background:var(--gray);border-top:1px solid var(--gray2);padding:80px 60p
     <li><a href="#services">Услуги</a></li>
     <li><a href="#masters">Мастера</a></li>
     <li><a href="#gallery">Работы</a></li>
-    <li><a href="#booking">Записаться</a></li>
+    <li><a href="#booking">Запись</a></li>
   </ul>
   <button class="nav-book" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Записаться</button>
+  <button class="nav-mobile-btn"><span></span><span></span><span></span></button>
 </nav>
 
+<!-- HERO -->
 <section class="hero">
-  <div class="hero-bg" id="hbg"></div>
+  <div class="hero-bg">
+    <img id="himg" src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=1600&q=85" alt="Барбершоп">
+  </div>
   <div class="hero-overlay"></div>
   <div class="hero-content">
-    <div class="hero-eyebrow">Барбершоп · Москва · С 2019</div>
-    <h1 class="hero-title">ТВОЙ<br><span class="outline">ЛУЧШИЙ</span><br><span class="gold">ОБРАЗ</span></h1>
+    <div class="hero-label" id="hl">Барбершоп · Москва · С 2019</div>
+    <h1 class="hero-title">
+      <span class="word" style="transition-delay:0.3s">ТВОЙ</span>
+      <span class="word outline" style="transition-delay:0.42s"> ЛУЧШИЙ</span><br>
+      <span class="word gold" style="transition-delay:0.54s">ОБРАЗ</span>
+    </h1>
     <div class="hero-bottom">
-      <p class="hero-desc">Мужские стрижки, укладки и уход за бородой. Мастера с опытом от 5 лет. Без суеты — только результат.</p>
-      <div class="hero-cta">
+      <p class="hero-desc" id="hd">Мужские стрижки и уход за бородой. Мастера с опытом от 5 лет. Атмосфера в которую хочется возвращаться.</p>
+      <div class="hero-cta" id="hc">
         <button class="btn-gold" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Записаться онлайн</button>
-        <div class="scroll-hint">Смотреть дальше</div>
+        <div class="hero-scroll">Смотреть дальше</div>
       </div>
+    </div>
+    <div class="hero-stats" id="hs">
+      <div><div class="hstat-n">5<span class="u">+</span></div><div class="hstat-l">Лет работы</div></div>
+      <div><div class="hstat-n">12<span class="u">K</span></div><div class="hstat-l">Клиентов</div></div>
+      <div><div class="hstat-n">4.9<span class="u">★</span></div><div class="hstat-l">Рейтинг</div></div>
+      <div><div class="hstat-n">3</div><div class="hstat-l">Мастера</div></div>
     </div>
   </div>
 </section>
 
+<!-- MARQUEE -->
 <div class="marquee-wrap">
   <div class="marquee">
-    <span class="mi">СТРИЖКИ</span><span class="ms">·</span><span class="mi">БОРОДА</span><span class="ms">·</span><span class="mi">УКЛАДКИ</span><span class="ms">·</span><span class="mi">BRUTAL CUT</span><span class="ms">·</span><span class="mi">УХОД</span><span class="ms">·</span><span class="mi">СТРИЖКИ</span><span class="ms">·</span><span class="mi">БОРОДА</span><span class="ms">·</span><span class="mi">УКЛАДКИ</span><span class="ms">·</span><span class="mi">BRUTAL CUT</span><span class="ms">·</span><span class="mi">УХОД</span><span class="ms">·</span><span class="mi">СТРИЖКИ</span><span class="ms">·</span><span class="mi">БОРОДА</span><span class="ms">·</span>
+    <span class="mi">СТРИЖКИ</span><span class="ms">·</span><span class="mi">БОРОДА</span><span class="ms">·</span><span class="mi">УКЛАДКИ</span><span class="ms">·</span><span class="mi">BRUTAL CUT</span><span class="ms">·</span><span class="mi">УХОД</span><span class="ms">·</span><span class="mi">ФЕЙДЫ</span><span class="ms">·</span><span class="mi">СТРИЖКИ</span><span class="ms">·</span><span class="mi">БОРОДА</span><span class="ms">·</span><span class="mi">УКЛАДКИ</span><span class="ms">·</span><span class="mi">BRUTAL CUT</span><span class="ms">·</span><span class="mi">УХОД</span><span class="ms">·</span><span class="mi">ФЕЙДЫ</span><span class="ms">·</span>
   </div>
 </div>
 
+<!-- ABOUT -->
 <section class="about" id="about">
-  <div data-aos="fade-right">
-    <div class="tag">О нас</div>
-    <h2 class="h2b">Не просто<br>стрижка — <em>стиль</em></h2>
-    <p class="body-text">Brutal Cut — место где мужчина выходит другим человеком. Никаких очередей, никаких компромиссов. Только опытные мастера, правильные инструменты и атмосфера в которой хочется возвращаться снова.</p>
-    <div class="stats">
-      <div><div class="sn">5<span class="su">+</span></div><div class="sl">Лет работы</div></div>
-      <div><div class="sn">12<span class="su">K</span></div><div class="sl">Клиентов</div></div>
-      <div><div class="sn">4.9<span class="su">★</span></div><div class="sl">Рейтинг</div></div>
+  <div class="rvl">
+    <div class="sec-tag">О нас</div>
+    <h2 class="sec-h">Не просто<br>стрижка — <em>стиль</em></h2>
+    <p class="body-t">Brutal Cut — место где мужчина выходит другим человеком. Никаких очередей, никаких компромиссов. Только опытные мастера, качественные инструменты и атмосфера в которой хочется оставаться.</p>
+    <div class="about-stats">
+      <div><div class="ast-n">5<span class="ast-u">+</span></div><div class="ast-l">Лет работы</div></div>
+      <div><div class="ast-n">12<span class="ast-u">K</span></div><div class="ast-l">Клиентов</div></div>
+      <div><div class="ast-n">4.9<span class="ast-u">★</span></div><div class="ast-l">Рейтинг</div></div>
     </div>
   </div>
-  <div class="aimg-wrap" data-aos="fade-left">
-    <img class="aimg" src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=800&q=80" alt="Мастер за работой">
-    <div class="aimg-label">BRUTAL CUT<br>EST. 2019</div>
+  <div class="about-img-wrap rvr">
+    <img class="about-img" src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800&q=80" alt="Мастер за работой">
+    <div class="about-badge">BRUTAL CUT<br>EST. 2019</div>
   </div>
 </section>
 
-<section class="svcs-wrap" id="services">
-  <div class="sec-hd" data-aos="fade-up">
+<!-- SERVICES -->
+<section class="svcs" id="services">
+  <div class="sec-hd rv">
     <h2 class="sec-title">Услуги<br>и цены</h2>
-    <p class="sec-sub">Все цены включают консультацию и укладку</p>
+    <p class="sec-note">Все цены включают консультацию и укладку</p>
   </div>
   <div class="svc-grid">
-    <div class="svc" data-aos="fade-up"><div class="svc-n">01</div><h3 class="svc-name">Классическая стрижка</h3><p class="svc-desc">Машинка + ножницы, чёткий контур, лёгкая укладка. Базовый формат — всегда в точку.</p><div class="svc-price">1 200 ₽ <span>/ 45 мин</span></div></div>
-    <div class="svc" data-aos="fade-up" data-aos-delay="80"><div class="svc-n">02</div><h3 class="svc-name">Стрижка + борода</h3><p class="svc-desc">Полный образ под ключ. Стрижка, оформление и уход за бородой, контур и горячее бритьё.</p><div class="svc-price">2 000 ₽ <span>/ 75 мин</span></div></div>
-    <div class="svc" data-aos="fade-up" data-aos-delay="160"><div class="svc-n">03</div><h3 class="svc-name">VIP-пакет</h3><p class="svc-desc">Стрижка + борода + горячее полотенце + уходовые процедуры для кожи.</p><div class="svc-price">3 200 ₽ <span>/ 90 мин</span></div></div>
-    <div class="svc" data-aos="fade-up"><div class="svc-n">04</div><h3 class="svc-name">Оформление бороды</h3><p class="svc-desc">Чёткая форма и идеальный контур. Бритьё опасной бритвой с горячим полотенцем.</p><div class="svc-price">800 ₽ <span>/ 30 мин</span></div></div>
-    <div class="svc" data-aos="fade-up" data-aos-delay="80"><div class="svc-n">05</div><h3 class="svc-name">Детская стрижка</h3><p class="svc-desc">Для мальчиков до 12 лет. Умеем работать с детьми — быстро и без слёз.</p><div class="svc-price">900 ₽ <span>/ 40 мин</span></div></div>
-    <div class="svc" data-aos="fade-up" data-aos-delay="160"><div class="svc-n">06</div><h3 class="svc-name">Абонемент × 5</h3><p class="svc-desc">5 классических стрижек по цене 4. Действует 3 месяца, привязан к мастеру.</p><div class="svc-price">4 800 ₽ <span>/ 5 визитов</span></div></div>
+    <div class="svc rv"><div class="svc-n">01</div><h3 class="svc-name">Классическая стрижка</h3><p class="svc-desc">Машинка + ножницы, чёткий контур, лёгкая укладка. Базовый формат — всегда в точку.</p><div class="svc-price">1 200 ₽ <span>/ 45 мин</span></div></div>
+    <div class="svc rv" style="transition-delay:0.08s"><div class="svc-n">02</div><h3 class="svc-name">Стрижка + борода</h3><p class="svc-desc">Полный образ под ключ. Стрижка, оформление бороды, контур и горячее бритьё.</p><div class="svc-price">2 000 ₽ <span>/ 75 мин</span></div></div>
+    <div class="svc rv" style="transition-delay:0.16s"><div class="svc-n">03</div><h3 class="svc-name">VIP-пакет</h3><p class="svc-desc">Стрижка + борода + горячее полотенце + уходовые процедуры. Максимум за один визит.</p><div class="svc-price">3 200 ₽ <span>/ 90 мин</span></div></div>
+    <div class="svc rv"><div class="svc-n">04</div><h3 class="svc-name">Оформление бороды</h3><p class="svc-desc">Чёткая форма, идеальный контур. Бритьё опасной бритвой с горячим полотенцем.</p><div class="svc-price">800 ₽ <span>/ 30 мин</span></div></div>
+    <div class="svc rv" style="transition-delay:0.08s"><div class="svc-n">05</div><h3 class="svc-name">Детская стрижка</h3><p class="svc-desc">Для мальчиков до 12 лет. Умеем работать с детьми — быстро и аккуратно.</p><div class="svc-price">900 ₽ <span>/ 40 мин</span></div></div>
+    <div class="svc rv" style="transition-delay:0.16s"><div class="svc-n">06</div><h3 class="svc-name">Абонемент × 5</h3><p class="svc-desc">5 классических стрижек по цене 4. Действует 3 месяца, привязан к мастеру.</p><div class="svc-price">4 800 ₽ <span>/ 5 визитов</span></div></div>
   </div>
 </section>
 
+<!-- MASTERS -->
 <section class="masters-wrap" id="masters">
   <div class="masters-inner">
-    <div class="sec-hd" data-aos="fade-up">
+    <div class="sec-hd rv">
       <h2 class="sec-title">Наши<br>мастера</h2>
-      <p class="sec-sub">Каждый с историей и своим стилем</p>
+      <p class="sec-note">Каждый с опытом, стилем и своим подходом</p>
     </div>
     <div class="masters-grid">
-      <div class="mc" data-aos="fade-up"><img src="https://images.unsplash.com/photo-1534297635766-a262cdcb8ee4?w=600&q=80" alt="Алексей"><div class="mc-overlay"></div><div class="mc-info"><div class="mc-name">Алексей</div><div class="mc-spec">Старший мастер</div><div class="mc-exp">8 лет · классика и фейды</div><span class="mc-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Записаться →</span></div></div>
-      <div class="mc" data-aos="fade-up" data-aos-delay="100"><img src="https://images.unsplash.com/photo-1595152452543-e5fc28ebc2b8?w=600&q=80" alt="Денис"><div class="mc-overlay"></div><div class="mc-info"><div class="mc-name">Денис</div><div class="mc-spec">Специалист по бороде</div><div class="mc-exp">6 лет · борода и скины</div><span class="mc-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Записаться →</span></div></div>
-      <div class="mc" data-aos="fade-up" data-aos-delay="200"><img src="https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=600&q=80" alt="Игорь"><div class="mc-overlay"></div><div class="mc-info"><div class="mc-name">Игорь</div><div class="mc-spec">Мастер стайлинга</div><div class="mc-exp">5 лет · укладки и текстуры</div><span class="mc-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Записаться →</span></div></div>
+      <div class="mc rv">
+        <img src="https://images.unsplash.com/photo-1580618672591-eb180b1a973f?w=700&q=80" alt="Алексей">
+        <div class="mc-overlay"></div>
+        <div class="mc-info">
+          <div class="mc-name">Алексей</div>
+          <div class="mc-spec">Старший мастер · Классика и фейды</div>
+          <div class="mc-exp">8 лет опыта · 2 400+ стрижек</div>
+          <span class="mc-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Записаться →</span>
+        </div>
+      </div>
+      <div class="mc rv" style="transition-delay:0.1s">
+        <img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=700&q=80" alt="Денис">
+        <div class="mc-overlay"></div>
+        <div class="mc-info">
+          <div class="mc-name">Денис</div>
+          <div class="mc-spec">Специалист по бороде</div>
+          <div class="mc-exp">6 лет опыта · Борода и скин-фейды</div>
+          <span class="mc-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Записаться →</span>
+        </div>
+      </div>
+      <div class="mc rv" style="transition-delay:0.2s">
+        <img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=700&q=80" alt="Игорь">
+        <div class="mc-overlay"></div>
+        <div class="mc-info">
+          <div class="mc-name">Игорь</div>
+          <div class="mc-spec">Мастер стайлинга и текстур</div>
+          <div class="mc-exp">5 лет опыта · Укладки и уход</div>
+          <span class="mc-btn" onclick="document.getElementById('booking').scrollIntoView({behavior:'smooth'})">Записаться →</span>
+        </div>
+      </div>
     </div>
   </div>
 </section>
 
+<!-- GALLERY -->
 <section class="gallery-wrap" id="gallery">
-  <div class="sec-hd" data-aos="fade-up">
+  <div class="sec-hd rv">
     <h2 class="sec-title">Наши<br>работы</h2>
-    <p class="sec-sub">Результат говорит громче слов</p>
+    <p class="sec-note">Результат говорит громче слов</p>
   </div>
   <div class="gal-grid">
-    <div class="gi g1" data-aos="fade-up"><img src="https://images.unsplash.com/photo-1567894340315-735d7c361db0?w=600&q=80" alt=""></div>
-    <div class="gi g2" data-aos="fade-up" data-aos-delay="60"><img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=600&q=80" alt=""></div>
-    <div class="gi g3" data-aos="fade-up" data-aos-delay="120"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=600&q=80" alt=""></div>
-    <div class="gi g4" data-aos="fade-up" data-aos-delay="0"><img src="https://images.unsplash.com/photo-1503951914875-452162b0f3f1?w=600&q=80" alt=""></div>
-    <div class="gi g5" data-aos="fade-up" data-aos-delay="60"><img src="https://images.unsplash.com/photo-1517832207067-4db24a2ae47c?w=600&q=80" alt=""></div>
-    <div class="gi g6" data-aos="fade-up" data-aos-delay="120"><img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&q=80" alt=""></div>
+    <div class="gi g1 rv"><img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=700&q=80" alt=""></div>
+    <div class="gi g2 rv" style="transition-delay:0.06s"><img src="https://images.unsplash.com/photo-1567894340315-735d7c361db0?w=600&q=80" alt=""></div>
+    <div class="gi g3 rv" style="transition-delay:0.12s"><img src="https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=500&q=80" alt=""></div>
+    <div class="gi g4 rv" style="transition-delay:0.06s"><img src="https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=600&q=80" alt=""></div>
+    <div class="gi g5 rv" style="transition-delay:0.1s"><img src="https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=600&q=80" alt=""></div>
+    <div class="gi g6 rv" style="transition-delay:0.14s"><img src="https://images.unsplash.com/photo-1540572792635-2ac5431c9ac8?w=600&q=80" alt=""></div>
   </div>
 </section>
 
+<!-- BOOKING -->
 <section class="booking-wrap" id="booking">
   <div class="booking-inner">
-    <div class="bl" data-aos="fade-right">
-      <div class="tag">Онлайн-запись</div>
-      <h2>ЗАПИШИСЬ<br>СЕЙЧАС</h2>
-      <p>Выбери мастера, услугу и удобное время. Подтверждение придёт сразу. Перенос или отмена — в любой момент.</p>
+    <div class="rvl">
+      <div class="sec-tag">Онлайн-запись</div>
+      <h2 class="sec-h">Запишись<br>прямо <em>сейчас</em></h2>
+      <p class="body-t">Выбери мастера, удобное время и услугу. Подтверждение придёт сразу. Перенос или отмена — в любой момент.</p>
+      <div class="booking-details">
+        <div class="bd-item">
+          <div class="bd-icon">🕙</div>
+          <div class="bd-text"><p>Часы работы</p><p>Ежедневно с 10:00 до 21:00</p></div>
+        </div>
+        <div class="bd-item">
+          <div class="bd-icon">📍</div>
+          <div class="bd-text"><p>Адрес</p><p>Москва, Тверская, 15</p></div>
+        </div>
+        <div class="bd-item">
+          <div class="bd-icon">📞</div>
+          <div class="bd-text"><p>Телефон</p><p>+7 (495) 123-45-67</p></div>
+        </div>
+      </div>
     </div>
-    <div class="bform" data-aos="fade-left">
-      <div class="frow">
-        <div class="field"><label>Имя</label><input type="text" placeholder="Ваше имя" id="bn"></div>
-        <div class="field"><label>Телефон</label><input type="tel" placeholder="+7 (___) ___-__-__" id="bp"></div>
+    <div class="booking-form rvr">
+      <h3 class="bf-title">Запись на стрижку</h3>
+      <p class="bf-sub">Заполните форму — ответим и подтвердим время</p>
+      <div class="bf-row">
+        <div class="bf-group"><label class="bf-label">Имя</label><input class="bf-input" type="text" placeholder="Ваше имя" id="bn"></div>
+        <div class="bf-group"><label class="bf-label">Телефон</label><input class="bf-input" type="tel" placeholder="+7 (___) ___-__-__" id="bp"></div>
       </div>
-      <div class="frow">
-        <div class="field"><label>Мастер</label><select id="bm"><option value="">Любой мастер</option><option>Алексей — классика</option><option>Денис — борода</option><option>Игорь — стайлинг</option></select></div>
-        <div class="field"><label>Услуга</label><select id="bs"><option>Классическая стрижка — 1 200 ₽</option><option>Стрижка + борода — 2 000 ₽</option><option>VIP-пакет — 3 200 ₽</option><option>Борода — 800 ₽</option><option>Детская — 900 ₽</option></select></div>
+      <div class="bf-row">
+        <div class="bf-group"><label class="bf-label">Мастер</label>
+          <select class="bf-select" id="bm">
+            <option value="">Любой мастер</option>
+            <option>Алексей — классика и фейды</option>
+            <option>Денис — борода и скин-фейды</option>
+            <option>Игорь — стайлинг и текстуры</option>
+          </select>
+        </div>
+        <div class="bf-group"><label class="bf-label">Услуга</label>
+          <select class="bf-select" id="bs">
+            <option>Классическая стрижка — 1 200 ₽</option>
+            <option>Стрижка + борода — 2 000 ₽</option>
+            <option>VIP-пакет — 3 200 ₽</option>
+            <option>Оформление бороды — 800 ₽</option>
+            <option>Детская стрижка — 900 ₽</option>
+          </select>
+        </div>
       </div>
-      <div class="frow">
-        <div class="field"><label>Дата</label><input type="date" id="bd"></div>
-        <div class="field"><label>Время</label><select id="bt"><option>10:00</option><option>11:00</option><option>12:00</option><option>13:00</option><option>14:00</option><option>15:00</option><option>16:00</option><option>17:00</option><option>18:00</option><option>19:00</option><option>20:00</option></select></div>
+      <div class="bf-row">
+        <div class="bf-group"><label class="bf-label">Дата</label><input class="bf-input" type="date" id="bd"></div>
+        <div class="bf-group"><label class="bf-label">Время</label>
+          <select class="bf-select" id="bt">
+            <option>10:00</option><option>11:00</option><option>12:00</option>
+            <option>13:00</option><option>14:00</option><option>15:00</option>
+            <option>16:00</option><option>17:00</option><option>18:00</option>
+            <option>19:00</option><option>20:00</option>
+          </select>
+        </div>
       </div>
-      <button class="bsubmit" id="bsub" onclick="bookIt()">Подтвердить запись →</button>
+      <button class="bf-submit" id="bsub" onclick="bookIt()">Подтвердить запись</button>
+      <p class="bf-note">Бесплатная отмена за 2 часа до визита</p>
     </div>
   </div>
 </section>
 
+<!-- REVIEWS -->
 <section class="reviews-wrap" id="reviews">
-  <div class="sec-hd" data-aos="fade-up">
+  <div class="sec-hd rv">
     <h2 class="sec-title">Что говорят<br>клиенты</h2>
-    <p class="sec-sub">500+ отзывов на Google и Яндекс</p>
+    <p class="sec-note">500+ отзывов на Google и Яндекс</p>
   </div>
   <div class="rev-grid">
-    <div class="rev" data-aos="fade-up"><div class="rev-q">"</div><div class="rev-stars">★★★★★</div><p class="rev-text">Хожу к Алексею уже два года. Понимает с полуслова — говоришь "как обычно" и получаешь идеально. Никогда не подводил.</p><div class="rev-author"><img class="rev-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80" alt=""><div><div class="rev-name">Михаил К.</div><div class="rev-meta">Постоянный · 24 визита</div></div></div></div>
-    <div class="rev" data-aos="fade-up" data-aos-delay="100"><div class="rev-q">"</div><div class="rev-stars">★★★★★</div><p class="rev-text">Денис сделал бороду лучше чем я просил — объяснил что подойдёт форме лица. Теперь только сюда.</p><div class="rev-author"><img class="rev-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt=""><div><div class="rev-name">Артём В.</div><div class="rev-meta">Клиент · 8 визитов</div></div></div></div>
-    <div class="rev" data-aos="fade-up" data-aos-delay="200"><div class="rev-q">"</div><div class="rev-stars">★★★★★</div><p class="rev-text">Атмосфера отличная. Игорь сделал укладку которую я потом повторял неделю по его инструкции — просто.</p><div class="rev-author"><img class="rev-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt=""><div><div class="rev-name">Дмитрий Н.</div><div class="rev-meta">Клиент · 12 визитов</div></div></div></div>
+    <div class="rev rv"><div class="rev-q">"</div><div class="rev-stars">★★★★★</div><p class="rev-text">Хожу к Алексею уже два года. Понимает с полуслова — говоришь "как обычно" и получаешь идеально. Никогда не подводил.</p><div class="rev-author"><img class="rev-avatar" src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=100&q=80" alt=""><div><div class="rev-name">Михаил К.</div><div class="rev-meta">Постоянный · 24 визита</div></div></div></div>
+    <div class="rev rv" style="transition-delay:0.1s"><div class="rev-q">"</div><div class="rev-stars">★★★★★</div><p class="rev-text">Денис сделал бороду лучше чем я просил — объяснил что подойдёт форме лица. Теперь только сюда.</p><div class="rev-author"><img class="rev-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt=""><div><div class="rev-name">Артём В.</div><div class="rev-meta">Клиент · 8 визитов</div></div></div></div>
+    <div class="rev rv" style="transition-delay:0.2s"><div class="rev-q">"</div><div class="rev-stars">★★★★★</div><p class="rev-text">Атмосфера отличная. Игорь сделал укладку которую я потом повторял неделю по его инструкции — просто.</p><div class="rev-author"><img class="rev-avatar" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&q=80" alt=""><div><div class="rev-name">Дмитрий Н.</div><div class="rev-meta">Клиент · 12 визитов</div></div></div></div>
   </div>
 </section>
 
 <footer>
   <div class="ft">
     <div class="ftop">
-      <div><div class="flogo">BRUTAL<span>CUT</span></div><p class="fdesc">Мужской барбершоп в Москве. Работаем с 2019. Записаться онлайн или по телефону.</p></div>
-      <div class="fcol"><div class="fcol-title">Услуги</div><ul><li><a href="#services">Стрижки</a></li><li><a href="#services">Борода</a></li><li><a href="#services">VIP-пакет</a></li><li><a href="#services">Абонемент</a></li></ul></div>
-      <div class="fcol"><div class="fcol-title">Мастера</div><ul><li><a href="#masters">Алексей</a></li><li><a href="#masters">Денис</a></li><li><a href="#masters">Игорь</a></li></ul></div>
-      <div class="fcol"><div class="fcol-title">Контакты</div><ul><li><a href="#">+7 (495) 123-45-67</a></li><li><a href="#">Тверская, 15</a></li><li><a href="#">Пн–Вс: 10:00–21:00</a></li></ul></div>
+      <div><div class="flogo">BRUTAL<span>CUT</span></div><p class="fdesc">Мужской барбершоп в центре Москвы. Работаем с 2019 года. Запись онлайн или по телефону.</p></div>
+      <div class="fcol"><div class="fct">Услуги</div><ul><li><a href="#services">Стрижки</a></li><li><a href="#services">Борода</a></li><li><a href="#services">VIP-пакет</a></li><li><a href="#services">Абонемент</a></li></ul></div>
+      <div class="fcol"><div class="fct">Мастера</div><ul><li><a href="#masters">Алексей</a></li><li><a href="#masters">Денис</a></li><li><a href="#masters">Игорь</a></li></ul></div>
+      <div class="fcol"><div class="fct">Контакты</div><ul><li><a href="#">+7 (495) 123-45-67</a></li><li><a href="#">Тверская, 15</a></li><li><a href="#">Пн–Вс: 10:00–21:00</a></li></ul></div>
     </div>
-    <div class="fbot">
-      <div class="fcopy">© 2025 BRUTAL CUT</div>
-      <div class="fsoc"><a href="#">Instagram</a><a href="#">Telegram</a><a href="#">ВКонтакте</a></div>
-    </div>
+    <div class="fbot"><div class="fcopy">© 2025 BRUTAL CUT</div><div class="fsoc"><a href="#">Instagram</a><a href="#">Telegram</a><a href="#">ВКонтакте</a></div></div>
   </div>
 </footer>
 
-<script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
 <script>
-AOS.init({duration:700,easing:'ease-out-cubic',once:true,offset:60});
+// CURSOR
 const cur=document.getElementById('cur'),ring=document.getElementById('ring');
 let mx=0,my=0,rx=0,ry=0;
 document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;cur.style.left=mx+'px';cur.style.top=my+'px';});
-(function anim(){rx+=(mx-rx)*0.12;ry+=(my-ry)*0.12;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(anim);})();
-document.querySelectorAll('a,button,.svc,.mc').forEach(el=>{
-  el.addEventListener('mouseenter',()=>{ring.style.width='60px';ring.style.height='60px';ring.style.opacity='0.9';});
-  el.addEventListener('mouseleave',()=>{ring.style.width='40px';ring.style.height='40px';ring.style.opacity='0.5';});
+(function a(){rx+=(mx-rx)*0.1;ry+=(my-ry)*0.1;ring.style.left=rx+'px';ring.style.top=ry+'px';requestAnimationFrame(a);})();
+document.querySelectorAll('a,button,.svc,.mc,.gi,.rev').forEach(el=>{
+  el.addEventListener('mouseenter',()=>{ring.style.width='52px';ring.style.height='52px';ring.style.opacity='0.7';});
+  el.addEventListener('mouseleave',()=>{ring.style.width='36px';ring.style.height='36px';ring.style.opacity='0.5';});
 });
-window.addEventListener('load',()=>document.getElementById('hbg').classList.add('loaded'));
+
+// HERO
+window.addEventListener('load',()=>{
+  document.getElementById('himg').classList.add('loaded');
+  setTimeout(()=>document.getElementById('hl').classList.add('show'),200);
+  document.querySelectorAll('.hero-title .word').forEach(w=>{
+    setTimeout(()=>w.classList.add('show'),parseFloat(w.style.transitionDelay)*1000);
+  });
+  setTimeout(()=>document.getElementById('hd').classList.add('show'),700);
+  setTimeout(()=>document.getElementById('hc').classList.add('show'),900);
+  setTimeout(()=>document.getElementById('hs').classList.add('show'),1100);
+});
+
+// NAV
 window.addEventListener('scroll',()=>{
-  const n=document.getElementById('nav');
-  n.style.background=window.scrollY>80?'rgba(10,10,10,0.96)':'';
-  n.style.backdropFilter=window.scrollY>80?'blur(12px)':'';
+  document.getElementById('nav').classList.toggle('solid',window.scrollY>70);
+},{passive:true});
+
+// REVEAL
+document.querySelectorAll('.rv,.rvl,.rvr').forEach(el=>{
+  new IntersectionObserver(entries=>{
+    entries.forEach(e=>{if(e.isIntersecting)e.target.classList.add('in');});
+  },{threshold:0.1,rootMargin:'0px 0px -36px 0px'}).observe(el);
 });
+
+// PARALLAX
+window.addEventListener('scroll',()=>{
+  const y=window.scrollY;
+  const bg=document.querySelector('.hero-bg img');
+  if(bg&&y<window.innerHeight)bg.style.transform=`scale(1.02) translateY(${y*0.22}px)`;
+},{passive:true});
+
+// BOOKING
 document.getElementById('bd').min=new Date().toISOString().split('T')[0];
 function bookIt(){
   const n=document.getElementById('bn').value.trim();
@@ -335,8 +512,8 @@ function bookIt(){
   if(!n||!p||!d){alert('Заполните имя, телефон и дату');return;}
   const b=document.getElementById('bsub');
   b.textContent='Вы записаны! Ждём вас ✓';
-  b.style.background='#1a4a2a';b.style.color='#90d4a8';
-  setTimeout(()=>{b.textContent='Подтвердить запись →';b.style.background='';b.style.color='';},5000);
+  b.style.background='#2a6636';b.style.color='#a0d4a8';
+  setTimeout(()=>{b.textContent='Подтвердить запись';b.style.background='';b.style.color='';},5000);
 }
 </script>
 </body>
